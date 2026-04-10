@@ -1,0 +1,76 @@
+@baseURL= http://localhost:3000
+@token=
+@productId=
+@orderId=
+
+### Register
+POST {{baseURL}}/auth/register
+Content-Type: application/json
+
+{"email": "test@example.com", "password": "password123"}
+
+### Login
+POST {{baseURL}}/auth/login
+Content-Type: application/json
+
+{"email": "test@example.com", "password": "password123"}
+
+### Get all products
+GET {{baseURL}}/products
+
+### Create product
+POST {{baseURL}}/products
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{"name": "T-shirt", "description": "Cotton tee", "price": 29.99, "stock":100}
+
+
+### Get one product
+GET {{baseURL}}/products/{{productId}}
+
+### Update one product
+PUT {{baseURL}}/products/{{productId}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{"price": 24.99, "stock": 80 }
+
+
+### Delete product
+DELETE {{baseURL}}/products/{{productId}}
+Authorization: Bearer {{token}}
+
+### Create order
+POST {{baseURL}}/orders
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{"items":[{"productId":"{{productId}}","quantity":2}]}
+
+### Get all orders
+GET {{baseURL}}/orders
+Authorization: Bearer {{token}}
+
+### Get one order
+GET {{baseURL}}/orders/{{orderId}}
+Authorization: Bearer {{token}}
+
+### Update order status
+PATCH {{baseURL}}/orders/{{orderId}}/status
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{"status":"PAID"}
+
+### Upload product image
+POST {{baseURL}}/upload/product
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="image"; filename="image.jpg"
+Content-Type: image/jpeg
+
+< /Users/madonathy/Developer/livestream-project/e-commerce/backend/upload/burger.jpg
+--boundary--
