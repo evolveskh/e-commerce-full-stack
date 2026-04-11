@@ -14,7 +14,8 @@ export default function RegisterPage() {
     e.preventDefault();
     setError("");
     try {
-      await api.post("/auth/login", { email, password });
+      const res = await api.post("/auth/login", { email, password });
+      localStorage.setItem("token", res.data.token);
       router.push("/");
     } catch (err: unknown) {
       if (err && typeof err === "object" && "response" in err) {

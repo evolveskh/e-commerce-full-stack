@@ -1,6 +1,7 @@
 "use client";
 
 import api from "@/lib/api";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -22,12 +23,15 @@ export default function HomePage() {
       .get("/products")
       .then((res) => setProducts(res.data))
       .finally(() => setLoading(false));
-  });
+  }, []);
   if (loading) return <div className="p-8 text-gray-900">Loading....</div>;
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900">
       <header className="bg-white border-b px-8 py-4 flex justify-between items-center">
         <h1 className="text-xl font-bold">Shop</h1>
+        <Link href="/products/create" className="text-sm underline">
+          Add Product
+        </Link>
         <Link href="/login" className="text-sm underline">
           Login
         </Link>
@@ -40,7 +44,28 @@ export default function HomePage() {
           <div className="grid grid-cols-1 sm:grid-col2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {products.map((product) => (
               <Link key={product.id} href={`/products/${product.id}`}>
-                <div></div>
+                <div className="bg-white rounded-lg shadow hover:shadow-md transition overflow-hidden">
+                  {product.imageUrl ? (
+                    <Image
+                      src={product.imageUrl}
+                      alt={product.name}
+                      width={400}
+                      height={300}
+                      className="w-full h-48 object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-48 bg-gray-100 flex items-center justify-center text-gray-400 text-sm">
+                      No Image
+                    </div>
+                  )}
+                  <div className="p-4">
+                    <h3 className="font-semibold text-sm">{product.name}</h3>
+                    <p className="text-gray-500 text-xs mt-1 line-clamp-2">
+                      {product.description}
+                    </p>
+                    <p className="font-bold mt-2">{product.price.toFixed(2)}</p>
+                  </div>
+                </div>
               </Link>
             ))}
           </div>
