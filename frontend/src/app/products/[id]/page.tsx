@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import api from "@/lib/api";
 import Link from "next/link";
 import Image from "next/image";
+import { useCart } from "@/lib/cart";
 
 interface Product {
   id: string;
@@ -19,6 +20,7 @@ export default function ProductDetailPage() {
   const { id } = useParams();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
+  const { addItem } = useCart();
 
   useEffect(() => {
     api
@@ -61,7 +63,17 @@ export default function ProductDetailPage() {
           )}
           <p className="text-2xl font-bold">${product.price.toFixed(2)}</p>
           <p className="text-sm text-gray-500">{product.stock} in stock</p>
-          <button className="w-full bg-black text-white py-3 rounded-lg font-medium">
+          <button
+            onClick={() =>
+              addItem({
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                imageUrl: product.imageUrl,
+              })
+            }
+            className="w-full bg-black text-white py-3 rounded-lg font-medium"
+          >
             Add to Card
           </button>
         </div>

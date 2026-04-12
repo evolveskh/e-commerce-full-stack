@@ -1,6 +1,7 @@
 "use client";
 
 import api from "@/lib/api";
+import { useCart } from "@/lib/cart";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -17,6 +18,7 @@ interface Product {
 export default function HomePage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const { items } = useCart();
 
   useEffect(() => {
     api
@@ -31,6 +33,9 @@ export default function HomePage() {
         <h1 className="text-xl font-bold">Shop</h1>
         <Link href="/products/create" className="text-sm underline">
           Add Product
+        </Link>
+        <Link href="/cart" className="text-sm underline">
+          Cart ({items.length})
         </Link>
         <Link href="/login" className="text-sm underline">
           Login
