@@ -1,11 +1,13 @@
 "use client";
 
 import api from "@/lib/api";
+import { useAuthGuard } from "@/lib/useAuthGuard";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function CreateProductPage() {
+  useAuthGuard();
   const router = useRouter();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");

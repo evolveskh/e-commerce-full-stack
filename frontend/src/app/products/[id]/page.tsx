@@ -20,7 +20,7 @@ export default function ProductDetailPage() {
   const { id } = useParams();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
-  const { addItem } = useCart();
+  const { items, addItem } = useCart();
 
   useEffect(() => {
     api
@@ -35,9 +35,12 @@ export default function ProductDetailPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900">
-      <header className="bg-white border-b px-8 py-4">
+      <header className="bg-white border-b px-8 py-4 flex justify-between items-center">
         <Link href="/" className="text-sm underline">
           Back to products
+        </Link>
+        <Link href="/cart" className="text-sm underline">
+          Cart ({items.length})
         </Link>
       </header>
 

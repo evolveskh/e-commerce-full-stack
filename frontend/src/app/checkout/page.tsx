@@ -2,12 +2,14 @@
 
 import api from "@/lib/api";
 import { useCart } from "@/lib/cart";
+import { useAuthGuard } from "@/lib/useAuthGuard";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function CheckoutPage() {
+  useAuthGuard();
   const { items, total, clearCart } = useCart();
   const router = useRouter();
   const [loading, setLoading] = useState(false);

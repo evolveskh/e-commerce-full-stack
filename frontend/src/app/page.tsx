@@ -1,9 +1,11 @@
 "use client";
 
 import api from "@/lib/api";
+import { isLoggedIn } from "@/lib/auth";
 import { useCart } from "@/lib/cart";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface Product {
@@ -19,6 +21,12 @@ export default function HomePage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const { items } = useCart();
+  const [loggedIn, setLoggedIn] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return isLoggedIn();
+  });
+
+  const router = useRouter();
 
   useEffect(() => {
     api
@@ -26,20 +34,37 @@ export default function HomePage() {
       .then((res) => setProducts(res.data))
       .finally(() => setLoading(false));
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setLoggedIn(false);
+    router.push("/login");
+  };
   if (loading) return <div className="p-8 text-gray-900">Loading....</div>;
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900">
       <header className="bg-white border-b px-8 py-4 flex justify-between items-center">
         <h1 className="text-xl font-bold">Shop</h1>
-        <Link href="/products/create" className="text-sm underline">
-          Add Product
-        </Link>
         <Link href="/cart" className="text-sm underline">
           Cart ({items.length})
         </Link>
-        <Link href="/login" className="text-sm underline">
-          Login
-        </Link>
+        {loggedIn ? (
+          <>
+            <Link href="/orders" className="text-sm underline">
+              Orders
+            </Link>
+            <Link href="/products/create" className="text-sm underline">
+              Add Product
+            </Link>
+            <button onClick={handleLogout} className="text-sm underline">
+              Logout
+            </button>
+          </>
+        ) : (
+          <Link href="/login" className="text-sm underline">
+            Login
+          </Link>
+        )}
       </header>
       <main className="p-8">
         <h2 className="text-2xl font-bold mb-6">Products</h2>
