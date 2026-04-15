@@ -71,7 +71,7 @@ export default function HomePage() {
         {products.length === 0 ? (
           <p className="text-gray-500">No product yet</p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-col2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {products.map((product) => (
               <Link key={product.id} href={`/products/${product.id}`}>
                 <div className="bg-white rounded-lg shadow hover:shadow-md transition overflow-hidden">
