@@ -25,6 +25,7 @@ export default function HomePage() {
     if (typeof window === "undefined") return false;
     return isLoggedIn();
   });
+  const [search, setSearch] = useState("");
 
   const router = useRouter();
 
@@ -40,6 +41,11 @@ export default function HomePage() {
     setLoggedIn(false);
     router.push("/login");
   };
+
+  const filtered = products.filter((p) =>
+    p.name.toLocaleLowerCase().includes(search.toLowerCase()),
+  );
+
   if (loading) return <div className="p-8 text-gray-900">Loading....</div>;
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900">
@@ -67,12 +73,21 @@ export default function HomePage() {
         )}
       </header>
       <main className="p-8">
+        <div className="mb-6">
+          <input
+            type="text"
+            placeholder="Search products..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full max-w-md border rounded px-4 py-2 text-sm"
+          />
+        </div>
         <h2 className="text-2xl font-bold mb-6">Products</h2>
         {products.length === 0 ? (
           <p className="text-gray-500">No product yet</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {products.map((product) => (
+            {filtered.map((product) => (
               <Link key={product.id} href={`/products/${product.id}`}>
                 <div className="bg-white rounded-lg shadow hover:shadow-md transition overflow-hidden">
                   {product.imageUrl ? (
