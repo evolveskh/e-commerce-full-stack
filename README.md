@@ -1,4 +1,3 @@
-
 # e-commerce-full-stack
 
 A full-stack e-commerce application built with Node.js, Express, Prisma, and Next.js.
@@ -19,6 +18,9 @@ A full-stack e-commerce application built with Node.js, Express, Prisma, and Nex
 ### Cart
 ![Cart](screenshot/cart_page.png)
 
+### Stripe Checkout
+![Stripe Checkout](screenshot/stripe.png)
+
 ### Checkout
 ![Checkout](screenshot/check_out_page.png)
 
@@ -35,6 +37,7 @@ A full-stack e-commerce application built with Node.js, Express, Prisma, and Nex
 - Zod — request validation
 - JWT — authentication
 - Cloudinary — image uploads
+- Stripe — payment processing
 
 **Frontend**
 - Next.js 16 + React 19
@@ -48,6 +51,7 @@ A full-stack e-commerce application built with Node.js, Express, Prisma, and Nex
 - JWT authentication
 - Product CRUD with image upload
 - Order management
+- Stripe checkout with webhooks
 - Client-side search
 - Cart with localStorage
 - Input validation
