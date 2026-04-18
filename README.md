@@ -20,7 +20,7 @@ A full-stack e-commerce application built with Node.js, Express, Prisma, and Nex
 ![Cart](screenshot/cart_page.png)
 
 ### Checkout
-![Checkout](screenshot/checkout_page.png)
+![Checkout](screenshot/check_out_page.png)
 
 ### Order History
 ![Order History](screenshot/orders_history_page.png)

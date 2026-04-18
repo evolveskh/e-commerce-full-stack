@@ -19,14 +19,19 @@ export default function CheckoutPage() {
     setError("");
     setLoading(true);
     try {
-      await api.post("/orders", {
+      const orderRes = await api.post("/orders", {
         items: items.map((item) => ({
           productId: item.id,
           quantity: item.quantity,
         })),
       });
+
+      const sessionRes = await api.post("/payment/create-session", {
+        orderId: orderRes.data.id,
+      });
+
       clearCart();
-      router.push("/orders/success");
+      window.location.href = sessionRes.data.url;
     } catch (err: unknown) {
       if (err && typeof err === "object" && "response" in err) {
         const axiosErr = err as { response: { data: { error: string } } };
@@ -34,7 +39,6 @@ export default function CheckoutPage() {
       } else {
         setError("Something went wrong");
       }
-    } finally {
       setLoading(false);
     }
   };
